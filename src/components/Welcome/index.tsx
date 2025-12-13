@@ -15,11 +15,9 @@ const Welcome = ({ onStart, bestScore }: WelcomeProps) => {
   const [showAbout, setShowAbout] = useState(false);
 
   const difficulties = [
-    { level: 3, label: "Velmi lehké", range: "3-5 znaků" },
-    { level: 6, label: "Lehké", range: "6-8 znaků" },
-    { level: 10, label: "Střední", range: "9-11 znaků" },
-    { level: 15, label: "Těžké", range: "12-17 znaků" },
-    { level: 20, label: "Expert", range: "18-20 znaků" },
+    { level: 3, label: "Lehké", range: "3-5 znaků" },
+    { level: 10, label: "Střední", range: "6-11 znaků" },
+    { level: 20, label: "Těžké", range: "12-20 znaků" },
   ];
 
   return (
