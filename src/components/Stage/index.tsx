@@ -1,52 +1,97 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Wordbox from "../Wordbox";
-import wordList from "../../word-list";
-import "./style.css";
+import Stats from "../Stats";
+import { StyledContainer, StyledPaper, WordsContainer } from "./styles";
+import { generateWord } from "./utils/generateWord";
+import { StageHeader } from "./components/StageHeader";
+import { StageStats } from "./components/StageStats";
+import { ProgressBox } from "./components/ProgressBox";
 
-const generateWord = (size: number) => {
-  const sizeIndex =
-    size === undefined ? Math.floor(Math.random() * wordList.length) : size - 3;
+interface StageProps {
+  difficulty: number;
+  onMenuClick: () => void;
+  onGameEnd?: (mistakes: number, timeElapsed: number) => void;
+}
 
-  if (sizeIndex < 0 || sizeIndex >= wordList.length) {
-    return null;
-  }
-
-  const words = wordList[sizeIndex];
-  const wordIndex = Math.floor(Math.random() * words.length);
-  return words[wordIndex];
-};
-
-const Stage = () => {
-  const [words, setWords] = useState<string[]>(["jahoda", "banán", "jablko"]);
+const Stage = ({ difficulty, onMenuClick, onGameEnd }: StageProps) => {
+  const [words, setWords] = useState<string[]>(
+    Array.from({ length: 3 }, () => generateWord(difficulty) || "")
+  );
   const [mistakes, setMistakes] = useState(0);
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const [wordsCompleted, setWordsCompleted] = useState(0);
+  const [showStats, setShowStats] = useState(false);
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+    if (!showStats) {
+      interval = setInterval(() => {
+        setTimeElapsed((prev) => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [showStats]);
 
   const handleFinish = () => {
-    const newWord = generateWord(6);
+    setWordsCompleted((prev) => prev + 1);
+    const newWord = generateWord(difficulty);
     setWords((prev) => {
       const removeFirst = prev.slice(1);
       return newWord ? [...removeFirst, newWord] : removeFirst;
     });
+
+    if (wordsCompleted >= 9) {
+      onGameEnd?.(mistakes, timeElapsed);
+      setShowStats(true);
+    }
   };
 
   const handleMistake = () => {
     setMistakes((prev) => prev + 1);
   };
 
+  const handleRestart = () => {
+    setWords(Array.from({ length: 3 }, () => generateWord(difficulty) || ""));
+    setMistakes(0);
+    setTimeElapsed(0);
+    setWordsCompleted(0);
+    setShowStats(false);
+  };
+
+  if (showStats) {
+    return (
+      <Stats
+        mistakes={mistakes}
+        timeElapsed={timeElapsed}
+        onRestart={handleRestart}
+        onMenu={onMenuClick}
+      />
+    );
+  }
+
+  const minutes = Math.floor(timeElapsed / 60);
+  const seconds = timeElapsed % 60;
+  const progress = (wordsCompleted / 10) * 100;
+
   return (
-    <div className="stage">
-      <div className="stage__mistakes">Chyb: {mistakes}</div>
-      <div className="stage__words">
-        {words.map((word, i) => (
-          <Wordbox
-            word={word}
-            onFinish={handleFinish}
-            active={i === 0}
-            key={word}
-            onMistake={handleMistake}
-          />
-        ))}
-      </div>
-    </div>
+    <StyledContainer maxWidth="md">
+      <StyledPaper>
+        <StageHeader onMenuClick={onMenuClick} />
+        <StageStats minutes={minutes} seconds={seconds} mistakes={mistakes} />
+        <ProgressBox wordsCompleted={wordsCompleted} progress={progress} />
+        <WordsContainer>
+          {words.map((word, i) => (
+            <Wordbox
+              word={word}
+              onFinish={handleFinish}
+              active={i === 0}
+              key={`${word}-${i}`}
+              onMistake={handleMistake}
+            />
+          ))}
+        </WordsContainer>
+      </StyledPaper>
+    </StyledContainer>
   );
 };
 

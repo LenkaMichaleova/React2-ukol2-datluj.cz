@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./style.css";
+import { StyledChip } from "./styles";
 
 interface IWordboxProp {
   word: string;
@@ -16,6 +16,7 @@ const Wordbox = ({ word, onFinish, active, onMistake }: IWordboxProp) => {
     const handleKeyUp = (e: KeyboardEvent) => {
       if (lettersLeft.length === 1 && e.key === lettersLeft[0]) {
         onFinish();
+        setMistake(false);
       } else if (e.key === lettersLeft[0]) {
         setLetersLeft((prev) => prev.slice(1));
         setMistake(false);
@@ -32,9 +33,11 @@ const Wordbox = ({ word, onFinish, active, onMistake }: IWordboxProp) => {
   }, [lettersLeft, active, onFinish, onMistake]);
 
   return (
-    <div className={mistake ? "wordbox wordbox--mistake" : "wordbox"}>
-      {lettersLeft}
-    </div>
+    <StyledChip
+      label={lettersLeft}
+      className={`${active && !mistake ? "active" : ""} ${mistake ? "error" : ""}`}
+      variant="outlined"
+    />
   );
 };
 
