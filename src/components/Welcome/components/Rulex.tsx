@@ -1,6 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
 
-export const Rules = ( { setShowAbout }: { setShowAbout: (show: boolean) => void }) => {
+export const Rules = ({
+  setShowAbout,
+}: {
+  setShowAbout: (show: boolean) => void;
+}) => {
   return (
     <>
       <Typography variant="h5" sx={{ mb: 2, fontWeight: 700 }}>

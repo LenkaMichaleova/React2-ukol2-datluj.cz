@@ -26,7 +26,7 @@ export const DifficultyButton = styled(Button)(({ theme }) => ({
   justifyContent: "space-between",
 }));
 
-export const LogoBox = styled("h3")({
+export const LogoBox = styled("div")({
   display: "flex",
   flexWrap: "wrap",
   justifyContent: "center",

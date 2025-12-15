@@ -20,19 +20,35 @@ const Stats = ({ mistakes, timeElapsed, onRestart, onMenu }: StatsProps) => {
         </Typography>
 
         <StatBox>
-          <Typography color="primary.contrastText" variant="body2" sx={{ mb: 0.5 }}>
+          <Typography
+            color="primary.contrastText"
+            variant="body2"
+            sx={{ mb: 0.5 }}
+          >
             Čas
           </Typography>
-          <Typography color="primary.contrastText" variant="h5" sx={{ fontWeight: 700 }}>
+          <Typography
+            color="primary.contrastText"
+            variant="h5"
+            sx={{ fontWeight: 700 }}
+          >
             {minutes}m {seconds}s
           </Typography>
         </StatBox>
 
         <StatBox>
-          <Typography color="primary.contrastText" variant="body2" sx={{ mb: 0.5 }}>
+          <Typography
+            color="primary.contrastText"
+            variant="body2"
+            sx={{ mb: 0.5 }}
+          >
             Chyb
           </Typography>
-          <Typography color="primary.contrastText" variant="h5" sx={{ fontWeight: 700 }}>
+          <Typography
+            color="primary.contrastText"
+            variant="h5"
+            sx={{ fontWeight: 700 }}
+          >
             {mistakes}
           </Typography>
         </StatBox>

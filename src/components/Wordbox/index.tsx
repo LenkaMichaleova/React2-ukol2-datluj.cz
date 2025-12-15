@@ -35,7 +35,9 @@ const Wordbox = ({ word, onFinish, active, onMistake }: IWordboxProp) => {
   return (
     <StyledChip
       label={lettersLeft}
-      className={`${active && !mistake ? "active" : ""} ${mistake ? "error" : ""}`}
+      className={`${active && !mistake ? "active" : ""} ${
+        mistake ? "error" : ""
+      }`}
       variant="outlined"
     />
   );

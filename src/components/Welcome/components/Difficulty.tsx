@@ -5,7 +5,7 @@ type difficulties = {
   level: number;
   label: string;
   range: string;
-}
+};
 
 interface DifficultyProps {
   onStart: (difficulty: number) => void;
