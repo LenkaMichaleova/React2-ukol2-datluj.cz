@@ -1,4 +1,4 @@
-import { Button, Container, Paper, styled } from "@mui/material";
+import { Button, Container, Paper, styled, Typography } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   minHeight: "100vh",
@@ -24,4 +24,24 @@ export const DifficultyButton = styled(Button)(({ theme }) => ({
   fontSize: "1rem",
   fontWeight: 600,
   justifyContent: "space-between",
+}));
+
+export const LogoBox = styled("h3")({
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: 1,
+});
+
+export const TitleStyled = styled(Typography)(({ theme }) => ({
+  fontWeight: 800,
+  textWrap: "wrap",
+  textTransform: "uppercase",
+  letterSpacing: "0.10em",
+  color: theme.palette.primary.main,
+  textShadow: `
+    2px 2px 0px rgba(0,0,0,0.2),
+    4px 4px 10px rgba(0,0,0,0.15)
+  `,
 }));

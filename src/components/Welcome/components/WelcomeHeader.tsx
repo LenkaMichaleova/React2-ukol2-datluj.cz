@@ -1,11 +1,13 @@
 import { Typography } from "@mui/material";
+import { LogoBox, TitleStyled } from "../styles";
 
 export const WelcomeHeader = () => {
   return (
     <>
-      <Typography variant="h3" sx={{ mb: 1, fontWeight: 700 }}>
-        ⌨️ Datlování
-      </Typography>
+      <LogoBox>
+        <Typography variant="h3">⌨️</Typography>
+        <TitleStyled variant="h3">Datlování</TitleStyled>
+      </LogoBox>
       <Typography
         variant="h6"
         sx={{ mb: 3, color: "text.secondary", fontWeight: 400 }}
