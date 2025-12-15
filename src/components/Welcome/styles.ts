@@ -31,12 +31,11 @@ export const LogoBox = styled("h3")({
   flexWrap: "wrap",
   justifyContent: "center",
   alignItems: "center",
-  gap: 1,
+  gap: "1rem",
 });
 
 export const TitleStyled = styled(Typography)(({ theme }) => ({
   fontWeight: 800,
-  textWrap: "wrap",
   textTransform: "uppercase",
   letterSpacing: "0.10em",
   color: theme.palette.primary.main,
@@ -44,4 +43,7 @@ export const TitleStyled = styled(Typography)(({ theme }) => ({
     2px 2px 0px rgba(0,0,0,0.2),
     4px 4px 10px rgba(0,0,0,0.15)
   `,
+  "@media (max-width: 500px)": {
+    fontSize: "2rem",
+  },
 }));
