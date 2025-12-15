@@ -14,12 +14,12 @@ const App = () => {
     "welcome"
   );
   const [difficulty, setDifficulty] = useState(5);
-  const [bestScore, setBestScore] = useState<BestScore | null>(null);
+  const [bestScores, setBestScores] = useState<Record<number, BestScore>>({});
 
   useEffect(() => {
-    const saved = localStorage.getItem("bestScore");
+    const saved = localStorage.getItem("bestScores");
     if (saved) {
-      setBestScore(JSON.parse(saved));
+      setBestScores(JSON.parse(saved));
     }
   }, []);
 
@@ -34,14 +34,17 @@ const App = () => {
 
   const updateBestScore = (mistakes: number, timeElapsed: number) => {
     const newScore: BestScore = { time: timeElapsed, mistakes };
+    const existing = bestScores[difficulty];
 
-    if (
-      !bestScore ||
-      mistakes < bestScore.mistakes ||
-      (mistakes === bestScore.mistakes && timeElapsed < bestScore.time)
-    ) {
-      setBestScore(newScore);
-      localStorage.setItem("bestScore", JSON.stringify(newScore));
+    const isBetter =
+      !existing ||
+      mistakes < existing.mistakes ||
+      (mistakes === existing.mistakes && timeElapsed < existing.time);
+
+    if (isBetter) {
+      const updated = { ...bestScores, [difficulty]: newScore };
+      setBestScores(updated);
+      localStorage.setItem("bestScores", JSON.stringify(updated));
     }
   };
 
@@ -50,7 +53,7 @@ const App = () => {
       <CssBaseline />
       <Box>
         {currentScreen === "welcome" ? (
-          <Welcome onStart={handleStartGame} bestScore={bestScore} />
+          <Welcome onStart={handleStartGame} bestScore={bestScores} />
         ) : (
           <Stage
             difficulty={difficulty}

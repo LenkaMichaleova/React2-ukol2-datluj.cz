@@ -8,16 +8,16 @@ import { Difficulty } from "./components/Difficulty";
 
 interface WelcomeProps {
   onStart: (difficulty: number) => void;
-  bestScore: { time: number; mistakes: number } | null;
+  bestScore: Record<number, { time: number; mistakes: number }>;
 }
 
 const Welcome = ({ onStart, bestScore }: WelcomeProps) => {
   const [showAbout, setShowAbout] = useState(false);
 
   const difficulties = [
-    { level: 3, label: "Lehké", range: "3-5 znaků" },
+    { level: 3, label: "Lehká", range: "3-5 znaků" },
     { level: 10, label: "Střední", range: "6-11 znaků" },
-    { level: 20, label: "Těžké", range: "12-20 znaků" },
+    { level: 20, label: "Těžká", range: "12-20 znaků" },
   ];
 
   return (
@@ -26,9 +26,7 @@ const Welcome = ({ onStart, bestScore }: WelcomeProps) => {
         {!showAbout ? (
           <>
             <WelcomeHeader />
-            {bestScore && (
-              <BestScore time={bestScore.time} mistakes={bestScore.mistakes} />
-            )}
+            <BestScore bestScores={bestScore} difficulties={difficulties} />
             <Difficulty onStart={onStart} difficulties={difficulties} />
             <Button onClick={() => setShowAbout(true)} sx={{ mt: 2 }}>
               ℹ️ O hře
