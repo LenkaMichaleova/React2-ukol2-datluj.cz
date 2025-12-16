@@ -6,7 +6,6 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "center",
   padding: theme.spacing(2),
-  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
 }));
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
